@@ -1,3 +1,75 @@
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.headerInner {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0 auto;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  min-height: var(--header-height);
+  padding: var(--space-2) var(--gutter-mobile);
+}
+
+.logo {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  gap: var(--space-2);
+  /* Pushes the theme toggle and avatar to the far side on mobile. */
+  margin-right: auto;
+}
+
+.logoMark {
+  align-items: center;
+  background: var(--brand);
+  border-radius: var(--radius-sm);
+  color: var(--on-brand);
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+/* The wireframe's mobile header has no nav. */
+.nav {
+  display: none;
+}
+
+.navCurrent {
+  font-weight: var(--weight-semibold);
+}
+
+.navItem {
+  background: transparent;
+  border: 0;
+  color: var(--text-subtle);
+  padding: 0;
+}
+
+/* On mobile the switch drops to its own row, since it won't fit beside the rest. */
+.segmentSlot {
+  order: 1;
+  width: 100%;
+}
+
+.avatar {
+  align-items: center;
+  background: var(--brand-soft);
+  border-radius: var(--radius-full);
+  color: var(--text);
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  height: var(--tap-target);
+  justify-content: center;
+  width: var(--tap-target);
+}
+
 .page {
   margin: 0 auto;
   max-width: calc(var(--container) + 2 * var(--gutter));
@@ -87,8 +159,14 @@
 }
 
 @media (min-width: 640px) {
+  .headerInner,
   .page {
     padding-inline: var(--gutter);
+  }
+
+  .segmentSlot {
+    order: 0;
+    width: auto;
   }
 
   .accounts {
@@ -97,6 +175,17 @@
 }
 
 @media (min-width: 1024px) {
+  .logo {
+    margin-right: var(--space-4);
+  }
+
+  .nav {
+    align-items: center;
+    display: flex;
+    gap: var(--space-5);
+    margin-right: auto;
+  }
+
   .layout {
     align-items: start;
     grid-template-columns: minmax(0, 1fr) 300px;

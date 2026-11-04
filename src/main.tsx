@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App'
 import { DashboardSkeleton } from './dashboard/DashboardSkeleton'
+import { Header } from './dashboard/Header'
 import './index.css'
 
 async function enableMocking() {
@@ -30,6 +31,7 @@ async function bootstrap() {
   // skeleton during that wait instead of a blank page.
   root.render(
     <StrictMode>
+      <Header />
       <DashboardSkeleton />
     </StrictMode>,
   )

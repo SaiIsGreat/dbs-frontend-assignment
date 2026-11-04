@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f4f6fa" />
     <title>Meridian Banking</title>
+    <script>
+      // Runs before first paint, so a reload never flashes the wrong theme.
+      // The storage keys must match src/theme/preferences.ts.
+      (function () {
+        function readStored(key) {
+          try {
+            return localStorage.getItem(key);
+          } catch {
+            return null;
+          }
+        }
+
+        var root = document.documentElement;
+        var theme = readStored('meridian-theme');
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+        }
+        root.dataset.theme = theme;
+
+        var segment = readStored('meridian-segment');
+        if (segment === 'retail' || segment === 'premium') {
+          root.dataset.segment = segment;
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
