@@ -1,8 +1,9 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useAccounts } from '../api/queries/useAccounts'
 import { useCustomer } from '../api/queries/useCustomer'
 import { useTransactions } from '../api/queries/useTransactions'
 import { Button } from '../components/Button'
+import { TransferDialog } from '../transfer/TransferDialog'
 import { AccountCard } from './AccountCard'
 import { BalanceHero } from './BalanceHero'
 import { DailyLimitCard } from './DailyLimitCard'
@@ -15,6 +16,7 @@ import {
 import styles from './dashboard.module.css'
 
 export function Dashboard() {
+  const [isTransferOpen, setIsTransferOpen] = useState(false)
   const customer = useCustomer()
   const accounts = useAccounts()
   const transactions = useTransactions({ limit: RECENT_TRANSACTIONS_LIMIT })
@@ -47,7 +49,10 @@ export function Dashboard() {
           <h1 className={styles.greeting}>
             Good evening, {customer.data.firstName}
           </h1>
-          <BalanceHero accounts={accounts.data} />
+          <BalanceHero
+            accounts={accounts.data}
+            onNewTransfer={() => setIsTransferOpen(true)}
+          />
           <section aria-labelledby="accounts-title">
             <h2 className={styles.sectionTitle} id="accounts-title">
               Accounts
@@ -65,6 +70,9 @@ export function Dashboard() {
           <DailyLimitCard customer={customer.data} />
           <TransactionList />
         </div>
+        {isTransferOpen && (
+          <TransferDialog onClose={() => setIsTransferOpen(false)} />
+        )}
       </main>
     )
   }

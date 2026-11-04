@@ -77,7 +77,9 @@
 .page {
   margin: 0 auto;
   max-width: calc(var(--container) + 2 * var(--gutter));
-  padding: var(--space-6) var(--gutter-mobile);
+  /* The extra space at the bottom keeps content clear of the fixed button. */
+  padding: var(--space-6) var(--gutter-mobile)
+    calc(var(--space-8) + var(--tap-target) + env(safe-area-inset-bottom));
 }
 
 /* The markup is in mobile order, with the daily limit above the transactions. */
@@ -129,10 +131,24 @@
 }
 
 .heroLoaded {
+  align-items: center;
   background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
   border-radius: var(--radius-lg);
   color: var(--on-hero);
+  display: flex;
+  gap: var(--space-4);
+  justify-content: space-between;
   padding: var(--space-6);
+}
+
+/* Fixed to the bottom of the screen on mobile. */
+.newTransfer {
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  box-shadow: var(--shadow-md);
+  left: var(--gutter-mobile);
+  position: fixed;
+  right: var(--gutter-mobile);
+  z-index: var(--z-header);
 }
 
 .heroLabel {
@@ -226,6 +242,24 @@
   .headerInner,
   .page {
     padding-inline: var(--gutter);
+  }
+
+  .page {
+    padding-bottom: var(--space-6);
+  }
+
+  /* Back inside the hero, where the brand colour wouldn't stand out. */
+  .heroLoaded .newTransfer,
+  .heroLoaded .newTransfer:hover:not(:disabled) {
+    background: var(--on-hero);
+    box-shadow: none;
+    color: var(--hero-from);
+    flex-shrink: 0;
+    position: static;
+  }
+
+  .heroLoaded .newTransfer:hover:not(:disabled) {
+    opacity: 0.9;
   }
 
   .segmentSlot {

@@ -10,6 +10,16 @@ body,
   min-height: 100%;
 }
 
+/* Reserves the scrollbar's space, so locking the page below doesn't shift it. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Stops the page behind an open dialog from scrolling. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   background: var(--bg);

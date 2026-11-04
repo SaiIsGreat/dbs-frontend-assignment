@@ -1,0 +1,111 @@
+/* ---- Dialog ---- */
+
+/* A full-screen sheet below 1024px, and a centred dialog from there up. */
+.dialog {
+  background: var(--surface);
+  border: 0;
+  color: var(--text);
+  height: 100dvh;
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  /* Not 100%, which would leave out the scrollbar space reserved in index.css. */
+  width: 100vw;
+}
+
+.dialog::backdrop {
+  background: var(--overlay);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+.closeButton {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-full);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  height: var(--tap-target);
+  justify-content: center;
+  width: var(--tap-target);
+}
+
+.closeButton:hover {
+  background: var(--surface-muted);
+}
+
+/* ---- Stepper ---- */
+
+.stepper {
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  display: flex;
+  font-size: var(--text-sm);
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.stepperItem:not(:last-child)::after {
+  /* The empty alt text stops screen readers announcing the arrow. */
+  content: '→' / '';
+  margin-left: var(--space-2);
+}
+
+.stepperItem[aria-current='step'] {
+  color: var(--brand);
+  font-weight: var(--weight-semibold);
+}
+
+/* ---- Content ---- */
+
+/* The only part that scrolls, so the footer stays at the bottom. */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+.stepTitle {
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  margin: 0;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4)
+    calc(var(--space-3) + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .dialog {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    height: min(640px, calc(100dvh - 2 * var(--space-8)));
+    width: 520px;
+  }
+}
