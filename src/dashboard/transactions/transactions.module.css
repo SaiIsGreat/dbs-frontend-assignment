@@ -1,0 +1,140 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin: 0;
+}
+
+.search {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  height: var(--tap-target);
+  padding: 0 var(--space-3);
+  width: 100%;
+}
+
+.search::placeholder {
+  color: var(--text-muted);
+}
+
+/* Takes no space when there's no search, so it can stay mounted. */
+.summary {
+  align-items: center;
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+}
+
+.status {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+.summary:has(button) {
+  margin-bottom: var(--space-3);
+}
+
+.list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  min-height: 72px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.description {
+  font-weight: var(--weight-medium);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.category {
+  text-transform: capitalize;
+}
+
+.values {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.moneyIn {
+  color: var(--positive);
+  font-weight: var(--weight-semibold);
+}
+
+.moneyOut {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.pending {
+  background: var(--warning-soft);
+  border-radius: var(--radius-full);
+  color: var(--warning);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  padding: 0 var(--space-2);
+}
+
+.message {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin: 0;
+  padding: var(--space-4);
+}
+
+.message p {
+  margin: 0 0 var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .header {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .search {
+    width: 280px;
+  }
+}

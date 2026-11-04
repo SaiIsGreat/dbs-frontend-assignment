@@ -2,14 +2,17 @@ import type { ReactNode } from 'react'
 import { useAccounts } from '../api/queries/useAccounts'
 import { useCustomer } from '../api/queries/useCustomer'
 import { useTransactions } from '../api/queries/useTransactions'
+import { Button } from '../components/Button'
 import { AccountCard } from './AccountCard'
 import { BalanceHero } from './BalanceHero'
 import { DailyLimitCard } from './DailyLimitCard'
 import { DashboardSkeleton } from './DashboardSkeleton'
 import { Header } from './Header'
+import {
+  RECENT_TRANSACTIONS_LIMIT,
+  TransactionList,
+} from './transactions/TransactionList'
 import styles from './dashboard.module.css'
-
-const RECENT_TRANSACTIONS_LIMIT = 8
 
 export function Dashboard() {
   const customer = useCustomer()
@@ -28,13 +31,11 @@ export function Dashboard() {
     body = (
       <main className={styles.page}>
         <p role="alert">We couldn&apos;t load your dashboard.</p>
-        <button
-          className={styles.retryButton}
+        <Button
           onClick={() => failedQueries.forEach((query) => void query.refetch())}
-          type="button"
         >
           Retry
-        </button>
+        </Button>
       </main>
     )
   } else if (!customer.data || !accounts.data || !transactions.data) {
@@ -62,14 +63,7 @@ export function Dashboard() {
             )}
           </section>
           <DailyLimitCard customer={customer.data} />
-          {/* Placeholder: the transactions slice replaces this. */}
-          <section className={styles.transactions}>
-            {transactions.data.transactions.map((transaction) => (
-              <div className={styles.transactionRow} key={transaction.id}>
-                {transaction.description}
-              </div>
-            ))}
-          </section>
+          <TransactionList />
         </div>
       </main>
     )

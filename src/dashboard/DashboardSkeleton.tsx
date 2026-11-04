@@ -1,8 +1,8 @@
 import { Skeleton } from '../components/Skeleton'
+import { TransactionListSkeleton } from './transactions/TransactionListSkeleton'
 import styles from './dashboard.module.css'
 
 const ACCOUNT_CARDS = 3
-const TRANSACTION_ROWS = 8
 const LINE_HEIGHT = 'calc(1em * var(--leading-tight))'
 
 export function DashboardSkeleton() {
@@ -36,13 +36,7 @@ export function DashboardSkeleton() {
         <div className={`${styles.card} ${styles.rail}`}>
           <Skeleton height="100%" />
         </div>
-        <div className={styles.transactions}>
-          {Array.from({ length: TRANSACTION_ROWS }, (_, index) => (
-            <div className={styles.transactionRow} key={index}>
-              <Skeleton height="1.5rem" />
-            </div>
-          ))}
-        </div>
+        <TransactionListSkeleton />
       </div>
     </main>
   )

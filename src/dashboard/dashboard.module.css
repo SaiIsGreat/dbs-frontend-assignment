@@ -208,35 +208,7 @@
   font-weight: var(--weight-semibold);
 }
 
-/* ---- Transactions ---- */
-
-.transactions {
-  display: flex;
-  flex-direction: column;
-}
-
-.transactionRow {
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  min-height: 64px;
-}
-
 /* ---- States ---- */
-
-.retryButton {
-  background: var(--brand);
-  border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--on-brand);
-  cursor: pointer;
-  min-height: var(--tap-target);
-  padding: var(--space-2) var(--space-4);
-}
-
-.retryButton:hover {
-  background: var(--brand-hover);
-}
 
 .visuallyHidden {
   clip-path: inset(50%);

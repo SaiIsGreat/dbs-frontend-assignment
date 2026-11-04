@@ -1,3 +1,36 @@
+.button {
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: var(--weight-medium);
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-4);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.primary {
+  background: var(--brand);
+  border: 0;
+  color: var(--on-brand);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--surface-muted);
+}
+
 .skeleton {
   animation: shimmer 1.4s ease-in-out infinite;
   background: linear-gradient(
