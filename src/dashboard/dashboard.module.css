@@ -1,0 +1,104 @@
+.page {
+  margin: 0 auto;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  padding: var(--space-6) var(--gutter-mobile);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.greeting {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  margin: 0;
+}
+
+.hero,
+.accountCard,
+.rail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+/* Fixed heights keep the layout still when the data replaces the skeletons. */
+.hero {
+  height: 160px;
+}
+
+.accounts {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.accountCard {
+  height: 112px;
+}
+
+.transactions {
+  display: flex;
+  flex-direction: column;
+}
+
+.transactionRow {
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  min-height: 64px;
+}
+
+.rail {
+  height: 160px;
+}
+
+.retryButton {
+  background: var(--brand);
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--on-brand);
+  cursor: pointer;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-4);
+}
+
+.retryButton:hover {
+  background: var(--brand-hover);
+}
+
+.visuallyHidden {
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding-inline: var(--gutter);
+  }
+
+  .accounts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
