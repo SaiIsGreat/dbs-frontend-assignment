@@ -2,6 +2,9 @@ import type { ReactNode } from 'react'
 import { useAccounts } from '../api/queries/useAccounts'
 import { useCustomer } from '../api/queries/useCustomer'
 import { useTransactions } from '../api/queries/useTransactions'
+import { AccountCard } from './AccountCard'
+import { BalanceHero } from './BalanceHero'
+import { DailyLimitCard } from './DailyLimitCard'
 import { DashboardSkeleton } from './DashboardSkeleton'
 import { Header } from './Header'
 import styles from './dashboard.module.css'
@@ -37,31 +40,36 @@ export function Dashboard() {
   } else if (!customer.data || !accounts.data || !transactions.data) {
     body = <DashboardSkeleton />
   } else {
-    // Placeholder content: the styled sections replace this in the next slices.
     body = (
       <main className={styles.page}>
         <div className={styles.layout}>
-          <div className={styles.mainColumn}>
-            <h1 className={styles.greeting}>
-              Good evening, {customer.data.firstName}
-            </h1>
-            <section className={styles.hero} />
-            <section className={styles.accounts}>
-              {accounts.data.map((account) => (
-                <div className={styles.accountCard} key={account.id}>
-                  {account.name}
-                </div>
-              ))}
-            </section>
-            <section className={styles.transactions}>
-              {transactions.data.transactions.map((transaction) => (
-                <div className={styles.transactionRow} key={transaction.id}>
-                  {transaction.description}
-                </div>
-              ))}
-            </section>
-          </div>
-          <aside className={styles.rail} />
+          <h1 className={styles.greeting}>
+            Good evening, {customer.data.firstName}
+          </h1>
+          <BalanceHero accounts={accounts.data} />
+          <section aria-labelledby="accounts-title">
+            <h2 className={styles.sectionTitle} id="accounts-title">
+              Accounts
+            </h2>
+            {accounts.data.length > 0 ? (
+              <ul className={styles.accounts}>
+                {accounts.data.map((account) => (
+                  <AccountCard account={account} key={account.id} />
+                ))}
+              </ul>
+            ) : (
+              <p className={styles.muted}>No accounts to show.</p>
+            )}
+          </section>
+          <DailyLimitCard customer={customer.data} />
+          {/* Placeholder: the transactions slice replaces this. */}
+          <section className={styles.transactions}>
+            {transactions.data.transactions.map((transaction) => (
+              <div className={styles.transactionRow} key={transaction.id}>
+                {transaction.description}
+              </div>
+            ))}
+          </section>
         </div>
       </main>
     )

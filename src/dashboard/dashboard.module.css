@@ -1,3 +1,5 @@
+/* ---- Header ---- */
+
 .header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -70,22 +72,19 @@
   width: var(--tap-target);
 }
 
+/* ---- Page layout ---- */
+
 .page {
   margin: 0 auto;
   max-width: calc(var(--container) + 2 * var(--gutter));
   padding: var(--space-6) var(--gutter-mobile);
 }
 
+/* The markup is in mobile order, with the daily limit above the transactions. */
 .layout {
   display: grid;
   gap: var(--space-6);
-}
-
-.mainColumn {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .greeting {
@@ -95,28 +94,121 @@
   margin: 0;
 }
 
-.hero,
-.accountCard,
-.rail {
+.sectionTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin: 0 0 var(--space-3);
+}
+
+/* ---- Shared pieces ---- */
+
+.card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-4);
 }
 
+.amount {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --text-subtle misses AA on --bg in light mode, so small text uses this. */
+.muted {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+/* ---- Balance hero ---- */
+
 /* Fixed heights keep the layout still when the data replaces the skeletons. */
 .hero {
   height: 160px;
 }
 
+.heroLoaded {
+  background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+  border-radius: var(--radius-lg);
+  color: var(--on-hero);
+  padding: var(--space-6);
+}
+
+.heroLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  margin: 0;
+}
+
+.heroAmount {
+  font-size: var(--text-display);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  margin: var(--space-1) 0;
+}
+
+.heroCaption {
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+/* ---- Accounts ---- */
+
 .accounts {
   display: grid;
   gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .accountCard {
-  height: 112px;
+  display: flex;
+  flex-direction: column;
+  height: 136px;
 }
+
+.accountName {
+  font-weight: var(--weight-semibold);
+}
+
+/* Sits at the bottom of the card, so balances line up across all three. */
+.accountFooter {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.accountBalance {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+/* ---- Daily limit ---- */
+
+.rail {
+  align-self: start;
+  height: 160px;
+}
+
+.railTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  margin: 0;
+}
+
+.railAmount {
+  margin: var(--space-2) 0;
+}
+
+.railAmount .amount {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+/* ---- Transactions ---- */
 
 .transactions {
   display: flex;
@@ -130,9 +222,7 @@
   min-height: 64px;
 }
 
-.rail {
-  height: 160px;
-}
+/* ---- States ---- */
 
 .retryButton {
   background: var(--brand);
@@ -157,6 +247,8 @@
   white-space: nowrap;
   width: 1px;
 }
+
+/* ---- Breakpoints ---- */
 
 @media (min-width: 640px) {
   .headerInner,
@@ -187,7 +279,16 @@
   }
 
   .layout {
-    align-items: start;
     grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  /* Everything stays in the first column, with the rail beside it. */
+  .layout > * {
+    grid-column: 1;
+  }
+
+  .layout > .rail {
+    grid-column: 2;
+    grid-row: 1 / span 4;
   }
 }
