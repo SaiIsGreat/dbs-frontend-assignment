@@ -2,6 +2,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { useAccounts } from '../api/queries/useAccounts'
 import { useCustomer } from '../api/queries/useCustomer'
 import { usePayees } from '../api/queries/usePayees'
+import { useCreateTransfer } from '../api/useCreateTransfer'
 import { Button } from '../components/Button'
 import { Skeleton } from '../components/Skeleton'
 import sharedStyles from '../components/components.module.css'
@@ -26,12 +27,27 @@ export function TransferDialog({ onClose }: TransferDialogProps) {
   const accounts = useAccounts()
   const customer = useCustomer()
   const payees = usePayees()
+  const createTransfer = useCreateTransfer()
+  // Closing can't cancel a sent request, and would hide the result from the user.
+  const isSending = createTransfer.isPending
 
   useEffect(() => {
     const dialog = dialogRef.current
     // StrictMode runs effects twice in development.
     if (dialog && !dialog.open) dialog.showModal()
   }, [])
+
+  // Blocking the `cancel` event below isn't enough: browsers let a repeated Esc
+  // close the dialog anyway. Cancelling the key press stops it happening at all.
+  useEffect(() => {
+    if (!isSending) return
+
+    const blockEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') event.preventDefault()
+    }
+    document.addEventListener('keydown', blockEscape)
+    return () => document.removeEventListener('keydown', blockEscape)
+  }, [isSending])
 
   const close = () => dialogRef.current?.close()
 
@@ -77,8 +93,9 @@ export function TransferDialog({ onClose }: TransferDialogProps) {
     content = (
       <TransferForm
         accounts={accounts.data}
+        createTransfer={createTransfer}
         customer={customer.data}
-        onCancel={close}
+        onClose={close}
         payees={payees.data}
       />
     )
@@ -88,6 +105,9 @@ export function TransferDialog({ onClose }: TransferDialogProps) {
     <dialog
       aria-labelledby="transfer-title"
       className={styles.dialog}
+      onCancel={(event) => {
+        if (isSending) event.preventDefault()
+      }}
       onClose={onClose}
       ref={dialogRef}
     >
@@ -99,6 +119,7 @@ export function TransferDialog({ onClose }: TransferDialogProps) {
           <button
             aria-label="Close"
             className={styles.closeButton}
+            disabled={isSending}
             onClick={close}
             type="button"
           >

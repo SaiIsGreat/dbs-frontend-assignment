@@ -49,8 +49,13 @@
   width: var(--tap-target);
 }
 
-.closeButton:hover {
+.closeButton:hover:not(:disabled) {
   background: var(--surface-muted);
+}
+
+.closeButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* ---- Stepper ---- */
@@ -106,6 +111,40 @@
   letter-spacing: var(--tracking-tight);
   line-height: var(--leading-tight);
   margin: 0 0 var(--space-4);
+}
+
+/* ---- Success ---- */
+
+/* Takes no space until the success screen appears inside it. */
+.live:not(:empty) {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.success {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+}
+
+.success p,
+.success .stepTitle {
+  margin: 0;
+}
+
+.successAmount {
+  font-size: var(--text-3xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.successNote {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
 }
 
 /* ---- Fields ---- */
