@@ -24,11 +24,30 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * Demo only: lets reviewers see the error, empty and loading states on the
+ * deployed site by opening `/?scenario=error`, `/?scenario=empty` or
+ * `/?delay=3000`. A real product wouldn't ship this.
+ */
+const DEMO_PARAMS = ['scenario', 'delay']
+
+function withDemoParams(path: string): string {
+  const pageParams = new URLSearchParams(window.location.search)
+  const url = new URL(path, window.location.origin)
+
+  for (const name of DEMO_PARAMS) {
+    const value = pageParams.get(name)
+    if (value) url.searchParams.set(name, value)
+  }
+
+  return `${url.pathname}${url.search}`
+}
+
 export async function apiFetch<T>(
   path: string,
   init?: RequestInit,
 ): Promise<T> {
-  const url = `${BASE_URL}${path.replace(/^\//, '')}`
+  const url = `${BASE_URL}${withDemoParams(path).replace(/^\//, '')}`
   const response = await fetch(url, init)
   const body = (await response.json().catch(() => null)) as
     | T
