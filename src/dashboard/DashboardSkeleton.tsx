@@ -1,4 +1,5 @@
 import { Skeleton } from '../components/Skeleton'
+import sharedStyles from '../components/components.module.css'
 import { TransactionListSkeleton } from './transactions/TransactionListSkeleton'
 import styles from './dashboard.module.css'
 
@@ -8,7 +9,7 @@ const LINE_HEIGHT = 'calc(1em * var(--leading-tight))'
 export function DashboardSkeleton() {
   return (
     <main className={styles.page}>
-      <p className={styles.visuallyHidden} role="status">
+      <p className={sharedStyles.visuallyHidden} role="status">
         Loading your dashboard
       </p>
       <div className={styles.layout}>

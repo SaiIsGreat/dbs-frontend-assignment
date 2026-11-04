@@ -79,18 +79,72 @@
 
 /* ---- Content ---- */
 
+.form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
 /* The only part that scrolls, so the footer stays at the bottom. */
 .body {
   flex: 1;
   overflow-y: auto;
   padding: var(--space-4);
+  /* Leaves room for a focused field's error message below it. */
+  scroll-padding-block: var(--space-4) var(--space-16);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
 .stepTitle {
   font-size: var(--text-xl);
   letter-spacing: var(--tracking-tight);
   line-height: var(--leading-tight);
-  margin: 0;
+  margin: 0 0 var(--space-4);
+}
+
+/* ---- Fields ---- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.labelRow {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.input {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  min-height: var(--tap-target);
+  padding-inline: var(--space-3);
+  width: 100%;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--negative);
+}
+
+.fieldError {
+  color: var(--negative);
+  font-size: var(--text-sm);
+  margin: var(--space-1) 0 0;
 }
 
 .footer {

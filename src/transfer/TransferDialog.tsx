@@ -1,4 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
+import { useAccounts } from '../api/queries/useAccounts'
+import { useCustomer } from '../api/queries/useCustomer'
+import { usePayees } from '../api/queries/usePayees'
+import { Button } from '../components/Button'
+import { Skeleton } from '../components/Skeleton'
+import sharedStyles from '../components/components.module.css'
+import { Stepper } from './Stepper'
 import { TransferForm } from './TransferForm'
 import styles from './transfer.module.css'
 
@@ -16,6 +23,9 @@ interface TransferDialogProps {
  */
 export function TransferDialog({ onClose }: TransferDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const accounts = useAccounts()
+  const customer = useCustomer()
+  const payees = usePayees()
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -24,6 +34,55 @@ export function TransferDialog({ onClose }: TransferDialogProps) {
   }, [])
 
   const close = () => dialogRef.current?.close()
+
+  const failedQueries = [accounts, customer, payees].filter(
+    (query) => query.isError && query.data === undefined,
+  )
+
+  // The form only renders once its data exists, so it never handles missing data.
+  let content: ReactNode
+  if (failedQueries.length > 0) {
+    content = (
+      <>
+        <Stepper currentStep={0} />
+        <div className={styles.body}>
+          <p role="alert">We couldn&apos;t load your payees.</p>
+          <Button
+            onClick={() =>
+              failedQueries.forEach((query) => void query.refetch())
+            }
+          >
+            Retry
+          </Button>
+        </div>
+      </>
+    )
+  } else if (!accounts.data || !customer.data || !payees.data) {
+    content = (
+      <>
+        <Stepper currentStep={0} />
+        <div className={styles.body}>
+          <p className={sharedStyles.visuallyHidden} role="status">
+            Loading your payees
+          </p>
+          <div className={styles.loading}>
+            <Skeleton height="1.75rem" width="70%" />
+            <Skeleton height="2.75rem" />
+            <Skeleton height="14rem" />
+          </div>
+        </div>
+      </>
+    )
+  } else {
+    content = (
+      <TransferForm
+        accounts={accounts.data}
+        customer={customer.data}
+        onCancel={close}
+        payees={payees.data}
+      />
+    )
+  }
 
   return (
     <dialog
@@ -54,7 +113,7 @@ export function TransferDialog({ onClose }: TransferDialogProps) {
             </svg>
           </button>
         </header>
-        <TransferForm onCancel={close} />
+        {content}
       </div>
     </dialog>
   )

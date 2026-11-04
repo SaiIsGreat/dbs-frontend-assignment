@@ -1,4 +1,5 @@
 import type { Customer } from '../api/types'
+import { getRemainingDailyLimit } from '../lib/banking'
 import { formatMoney } from '../lib/format'
 import styles from './dashboard.module.css'
 
@@ -7,7 +8,7 @@ interface DailyLimitCardProps {
 }
 
 export function DailyLimitCard({ customer }: DailyLimitCardProps) {
-  const remaining = customer.dailyTransferLimit - customer.transferredToday
+  const remaining = getRemainingDailyLimit(customer)
 
   return (
     <aside

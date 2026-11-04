@@ -1,5 +1,6 @@
 import type { Account } from '../api/types'
 import { Button } from '../components/Button'
+import { getDepositAccounts } from '../lib/banking'
 import { formatMoney } from '../lib/format'
 import styles from './dashboard.module.css'
 
@@ -9,8 +10,7 @@ interface BalanceHeroProps {
 }
 
 export function BalanceHero({ accounts, onNewTransfer }: BalanceHeroProps) {
-  // The credit card is money owed, so it isn't part of what's available.
-  const depositAccounts = accounts.filter((account) => account.type !== 'credit')
+  const depositAccounts = getDepositAccounts(accounts)
   const total = depositAccounts.reduce(
     (sum, account) => sum + account.balance,
     0,

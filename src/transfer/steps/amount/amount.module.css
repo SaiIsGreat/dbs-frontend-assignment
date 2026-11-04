@@ -1,0 +1,90 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.amountInput {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  display: flex;
+  min-height: var(--tap-target);
+  padding-inline: var(--space-3);
+}
+
+.amountInput:has([aria-invalid='true']) {
+  border-color: var(--negative);
+}
+
+/* The ring goes on the wrapper, so it surrounds SGD as well as the input. */
+.amountInput:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.currency {
+  color: var(--text-muted);
+  margin-right: var(--space-2);
+}
+
+.amountValue {
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  flex: 1;
+  font-variant-numeric: tabular-nums;
+  min-height: var(--tap-target);
+  min-width: 0;
+}
+
+/* The wrapper already shows the ring, so this would draw a second one. */
+.amountValue:focus-visible {
+  outline: none;
+}
+
+.quickAmounts {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.quickAmount {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  color: var(--text);
+  cursor: pointer;
+  flex: 1;
+  font-variant-numeric: tabular-nums;
+  min-height: var(--tap-target);
+}
+
+.quickAmount:hover {
+  background: var(--surface-muted);
+}
+
+.limits {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+.limit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.limitValue {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-medium);
+  margin: 0;
+}
+
+.counter {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}

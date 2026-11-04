@@ -224,18 +224,6 @@
   font-weight: var(--weight-semibold);
 }
 
-/* ---- States ---- */
-
-.visuallyHidden {
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-}
-
 /* ---- Breakpoints ---- */
 
 @media (min-width: 640px) {
